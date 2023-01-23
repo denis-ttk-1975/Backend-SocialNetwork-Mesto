@@ -1,0 +1,11 @@
+{
+  "name": "backend-socialnetwork-mesto",
+  "version": "1.0.0",
+  "description": "express server for backend of social network Mesto (Yandex Practikum)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Denis Ulesov",
+  "license": "ISC"
+}
