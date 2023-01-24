@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 type User = any;
 
@@ -23,4 +23,4 @@ const userSchema = new mongoose.Schema({
 
 // TS-интерфейс модели User
 
-export default mongoose.model<User>("user", userSchema);
+export default mongoose.model<User>('user', userSchema);

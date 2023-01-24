@@ -1,11 +1,10 @@
-import { Router } from "express";
+import { Router } from 'express';
+import { createUser, getUsers, getUser } from '../controllers/users';
 
 const router = Router(); // создали роутер
 
-import { createUser, getUsers, getUser } from "../controllers/users";
-
-router.post("/", createUser);
-router.get("/", getUsers);
-router.get("/:_id", getUser);
+router.post('/', createUser);
+router.get('/', getUsers);
+router.get('/:_id', getUser);
 
 export default router;

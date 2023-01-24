@@ -1,7 +1,15 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
 
 import usersRouter from "./routes/users";
+
+// interface IGetUserAuthInfoRequest extends Request {
+//   user: Record<string, string>; // or any other type
+// }
+
+interface IRequest extends Request {
+  user?: Record<string, string>;
+}
 
 // Слушаем 3000 порт
 const { PORT = 3000 } = process.env;
@@ -12,6 +20,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 mongoose.connect("mongodb://localhost:27017/mestodb");
+
+app.use((req: IRequest, res: Response, next: NextFunction) => {
+  req.user = {
+    _id: "63d036d835c09ee215e135ca",
+  };
+
+  next();
+});
 
 app.use("/users", usersRouter);
 
