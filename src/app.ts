@@ -2,10 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
 
 import usersRouter from "./routes/users";
-
-// interface IGetUserAuthInfoRequest extends Request {
-//   user: Record<string, string>; // or any other type
-// }
+import cardsRouter from "./routes/cards";
 
 interface IRequest extends Request {
   user?: Record<string, string>;
@@ -30,6 +27,7 @@ app.use((req: IRequest, res: Response, next: NextFunction) => {
 });
 
 app.use("/users", usersRouter);
+app.use("/cards", usersRouter);
 
 app.listen(PORT, () => {
   // Если всё работает, консоль покажет, какой порт приложение слушает
