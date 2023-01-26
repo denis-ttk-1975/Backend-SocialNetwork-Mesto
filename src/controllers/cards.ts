@@ -1,10 +1,15 @@
 import { Request, Response } from "express";
-import { ObjectId } from "mongodb";
+import Card from "../models/cards";
 
-import Card from "./../models/cards";
+interface IRequest extends Request {
+  user?: Record<string, string>;
+}
 
-export const createCard = (req: Request, res: Response) => {
+export const createCard = (req: IRequest, res: Response) => {
   const { name, link } = req.body;
+  if (req.user) {
+    console.log(req.user._id); // _id станет доступен}
+  }
 
   return Card.create({ name, link })
     .then((card) => res.send({ data: card }))
