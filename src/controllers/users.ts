@@ -23,3 +23,18 @@ export const getUser = (req: Request, res: Response) => {
     .then((user) => res.send({ data: user }))
     .catch(() => res.status(500).send({ message: "Произошла ошибка" }));
 };
+
+export const patchUser = (req: Request, res: Response) => {
+  const { name, about, avatar } = req.body;
+
+  return User.create({ name, about, avatar })
+    .then((user) => res.send({ data: user }))
+    .catch(() => res.status(500).send({ message: "Произошла ошибка" }));
+};
+
+// router.patch("/:id", (req, res) => {
+//   // обновим имя найденного по _id пользователя
+//   User.findByIdAndUpdate(req.params.id, { name: "Виктор Гусев" })
+//     .then((user) => res.send({ data: user }))
+//     .catch((err) => res.status(500).send({ message: "Произошла ошибка" }));
+// });
