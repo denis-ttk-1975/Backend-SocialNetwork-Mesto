@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { ObjectId } from "mongodb";
 
 import User from "./../models/users";
+import { IRequest } from "./../app";
 
 export const createUser = (req: Request, res: Response) => {
   const { name, about, avatar } = req.body;
@@ -24,17 +25,20 @@ export const getUser = (req: Request, res: Response) => {
     .catch(() => res.status(500).send({ message: "Произошла ошибка" }));
 };
 
-export const patchUser = (req: Request, res: Response) => {
-  const { name, about, avatar } = req.body;
+export const patchUser = (req: IRequest, res: Response) => {
+  const userId = req.user?._id;
+  const { name, about } = req.body;
 
-  return User.create({ name, about, avatar })
+  return User.findByIdAndUpdate(userId, { name, about })
     .then((user) => res.send({ data: user }))
-    .catch(() => res.status(500).send({ message: "Произошла ошибка" }));
+    .catch((err) => res.status(500).send({ message: "Произошла ошибка" }));
 };
 
-// router.patch("/:id", (req, res) => {
-//   // обновим имя найденного по _id пользователя
-//   User.findByIdAndUpdate(req.params.id, { name: "Виктор Гусев" })
-//     .then((user) => res.send({ data: user }))
-//     .catch((err) => res.status(500).send({ message: "Произошла ошибка" }));
-// });
+export const patchUserAvatar = (req: IRequest, res: Response) => {
+  const userId = req.user?._id;
+  const { avatar } = req.body;
+
+  return User.findByIdAndUpdate(userId, { avatar })
+    .then((user) => res.send({ data: user }))
+    .catch((err) => res.status(500).send({ message: "Произошла ошибка" }));
+};

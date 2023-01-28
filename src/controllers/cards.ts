@@ -7,11 +7,12 @@ interface IRequest extends Request {
 
 export const createCard = (req: IRequest, res: Response) => {
   const { name, link } = req.body;
+  const userId = req.user?._id;
   if (req.user) {
     console.log(req.user._id); // _id станет доступен}
   }
 
-  return Card.create({ name, link })
+  return Card.create({ name, link, owner: userId })
     .then((card) => res.send({ data: card }))
     .catch(() => res.status(500).send({ message: "Произошла ошибка" }));
 };

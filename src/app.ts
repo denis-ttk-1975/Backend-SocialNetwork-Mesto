@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import usersRouter from "./routes/users";
 import cardsRouter from "./routes/cards";
 
-interface IRequest extends Request {
+export interface IRequest extends Request {
   user?: Record<string, string>;
 }
 
@@ -27,7 +27,7 @@ app.use((req: IRequest, res: Response, next: NextFunction) => {
 });
 
 app.use("/users", usersRouter);
-app.use("/cards", usersRouter);
+app.use("/cards", cardsRouter);
 
 app.listen(PORT, () => {
   // Если всё работает, консоль покажет, какой порт приложение слушает
