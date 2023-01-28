@@ -8,9 +8,6 @@ interface IRequest extends Request {
 export const createCard = (req: IRequest, res: Response) => {
   const { name, link } = req.body;
   const userId = req.user?._id;
-  if (req.user) {
-    console.log(req.user._id); // _id станет доступен}
-  }
 
   return Card.create({ name, link, owner: userId })
     .then((card) => res.send({ data: card }))
@@ -25,7 +22,30 @@ export const getCards = (req: Request, res: Response) => {
 
 export const deleteCard = (req: Request, res: Response) => {
   const { cardId } = req.params;
-  return Card.findByIdAndRemove(cardId).catch(() =>
-    res.status(500).send({ message: "Произошла ошибка" })
-  );
+  return Card.findByIdAndRemove(cardId)
+    .then(() => res.send({ message: `Карточка ${cardId} удалена` }))
+    .catch(() => res.status(500).send({ message: "Произошла ошибка" }));
+};
+
+export const likeCard = (req: IRequest, res: Response) => {
+  const userId = req.user?._id;
+
+  Card.findByIdAndUpdate(
+    req.params.cardId,
+    { $addToSet: { likes: userId } }, // добавить _id в массив, если его там нет
+    { new: true }
+  )
+    .then((card) => res.send({ data: card }))
+    .catch(() => res.status(500).send({ message: "Произошла ошибка" }));
+};
+
+export const dislikeCard = (req: IRequest, res: Response) => {
+  const userId = req.user?._id;
+  Card.findByIdAndUpdate(
+    req.params.cardId,
+    { $pull: { likes: userId } }, // убрать _id из массива
+    { new: true }
+  )
+    .then((card) => res.send({ data: card }))
+    .catch(() => res.status(500).send({ message: "Произошла ошибка" }));
 };
