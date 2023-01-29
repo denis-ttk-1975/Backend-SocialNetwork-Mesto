@@ -9,7 +9,6 @@ import {
 } from "./constants";
 
 const errorHandler = (err: Error, res: Response) => {
-  console.log("errorHandler");
   if (err.name === "ValidationError" || err.name === "CastError") {
     res
       .status(ERROR_CODE_UNCORRECT_RESPONSE_DATA)

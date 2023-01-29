@@ -11,7 +11,7 @@ import {
 
 export const createUser = (req: Request, res: Response) => {
   const { name, about, avatar } = req.body;
-  console.log("createUser");
+
   return User.create({ name, about, avatar })
     .then((user) => res.send({ data: user }))
     .catch((err) => errorHandler(err, res));
