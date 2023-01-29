@@ -4,6 +4,10 @@ import { ObjectId } from "mongodb";
 import User from "./../models/users";
 import { IRequest } from "./../app";
 import errorHandler from "./../utils";
+import {
+  ERROR_CODE_UNCORRECT_RESPONSE_DATA,
+  message_404,
+} from "./../constants";
 
 export const createUser = (req: Request, res: Response) => {
   const { name, about, avatar } = req.body;
@@ -22,7 +26,15 @@ export const getUsers = (req: Request, res: Response) => {
 export const getUser = (req: Request, res: Response) => {
   const { _id } = req.params;
   return User.find({ _id: new ObjectId(_id) })
-    .then((user) => res.send({ data: user }))
+    .then((user) => {
+      if (!user.length) {
+        res
+          .status(ERROR_CODE_UNCORRECT_RESPONSE_DATA)
+          .send({ message: message_404 });
+      } else {
+        res.send({ data: user });
+      }
+    })
     .catch((err) => errorHandler(err, res));
 };
 
