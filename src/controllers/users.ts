@@ -25,7 +25,7 @@ export const getUser = (req: Request, res: Response) => {
     .catch(() => res.status(500).send({ message: "Произошла ошибка" }));
 };
 
-export const patchUser = (req: IRequest, res: Response) => {
+export const patchUserData = (req: IRequest, res: Response) => {
   const userId = req.user?._id;
   const { name, about } = req.body;
 
